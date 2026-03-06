@@ -169,25 +169,65 @@ streamlit run app.py
 
 ---
 
-## ☁️ Cloud Deployment
+## ☁️ Cloud Deployment — Streamlit Community Cloud
 
-**Streamlit Cloud or HuggingFace Spaces** — use Groq or Gemini (Ollama won't work on cloud):
+> Ollama is local-only and will not work on cloud. Use **Groq** or **Gemini** (both free).
 
+### Step 1 — Push code to GitHub
+
+The repo is already published at:
 ```
-LLM_PROVIDER=groq
-GROQ_API_KEY=your_key_here
+https://github.com/bestnaveen/report-agent
 ```
 
-or
+### Step 2 — Open Streamlit Community Cloud
 
-```
-LLM_PROVIDER=gemini
-GEMINI_API_KEY=your_key_here
+Go to **https://share.streamlit.io** and sign in with your GitHub account.
+
+### Step 3 — Create a new app
+
+Click **"Create app"** and fill in:
+
+| Field | Value |
+|-------|-------|
+| **Repository** | `bestnaveen/report-agent` |
+| **Branch** | `main` |
+| **Main file path** | `app.py` |
+
+### Step 4 — Add API keys as Secrets
+
+Click **"Advanced settings"** → **Secrets** tab and paste:
+
+```toml
+LLM_PROVIDER = "groq"
+GROQ_API_KEY = "your_groq_key_here"
+GEMINI_API_KEY = "your_gemini_key_here"
+OPENAI_API_KEY = "your_openai_key_here"
+ANTHROPIC_API_KEY = "your_anthropic_key_here"
 ```
 
 Get free keys:
 - Groq → [console.groq.com](https://console.groq.com)
 - Gemini → [aistudio.google.com](https://aistudio.google.com)
+- OpenAI → [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+- Anthropic → [console.anthropic.com](https://console.anthropic.com)
+
+### Step 5 — Deploy
+
+Click **"Deploy"**. Your app will be live in ~2 minutes at:
+```
+https://bestnaveen-report-agent.streamlit.app
+```
+
+### Updating the deployed app
+
+Any `git push` to the `main` branch automatically redeploys:
+
+```bash
+git add .
+git commit -m "your changes"
+git push origin main
+```
 
 ---
 
