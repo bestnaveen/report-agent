@@ -1,0 +1,14 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+.DS_Store
+chat_memory.db
+*.db
+/tmp/
+chroma_db/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
