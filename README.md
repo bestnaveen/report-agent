@@ -285,3 +285,5 @@ report-agent/
 | 🖥️ **Ollama** | Varies | ⭐⭐⭐⭐ | ✅ | Free | No key — runs locally |
 
 > **Recommendation:** Use **Groq** or **Gemini** for free fast responses. Use **Claude** for best reasoning on complex data analysis.
+
+https://mobility.streamlit.app/
