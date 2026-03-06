@@ -2,6 +2,8 @@
 
 A chatbot-style web app that analyzes data files and images, answers questions in **any language**, and exports professional reports — powered by your choice of AI engine.
 
+[![Deploy to Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=bestnaveen/report-agent&branch=main&mainModule=app.py)
+
 ---
 
 ## ✨ Features
@@ -172,6 +174,14 @@ streamlit run app.py
 ## ☁️ Cloud Deployment — Streamlit Community Cloud
 
 > Ollama is local-only and will not work on cloud. Use **Groq** or **Gemini** (both free).
+
+### ⚡ One-Click Deploy
+
+[![Deploy to Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=bestnaveen/report-agent&branch=main&mainModule=app.py)
+
+Click the button above → sign in with GitHub → add your API keys in **Advanced settings → Secrets** → click **Deploy**.
+
+---
 
 ### Step 1 — Push code to GitHub
 
