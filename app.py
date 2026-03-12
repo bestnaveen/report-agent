@@ -26,7 +26,7 @@ def _init():
         "chart_pngs": [], "last_df": None, "last_response": "",
         "llm_provider": None,
         "groq_api_key": "", "gemini_api_key": "",
-        "openai_api_key": "", "anthropic_api_key": "",
+        "openai_api_key": "", "anthropic_api_key": "", "mistral_api_key": "",
         "provider_confirmed": False,
         "theme": "dark",  # default dark
     }
@@ -787,11 +787,12 @@ if not st.session_state.provider_confirmed:
             "gemini":    ("#1e3a5f" if dark else "#dbeafe", "#93c5fd" if dark else "#1e40af"),
             "openai":    ("#164e63" if dark else "#cffafe", "#67e8f9" if dark else "#155e75"),
             "anthropic": ("#78350f" if dark else "#fef3c7", "#fcd34d" if dark else "#92400e"),
+            "mistral":   ("#7c2d12" if dark else "#ffedd5", "#fdba74" if dark else "#9a3412"),
             "ollama":    ("#2e1065" if dark else "#ede9fe", "#c4b5fd" if dark else "#5b21b6"),
         }
         spd_colors = {
             "groq": "#10b981", "gemini": "#3b82f6",
-            "openai": "#06b6d4", "anthropic": "#f59e0b", "ollama": "#8b5cf6",
+            "openai": "#06b6d4", "anthropic": "#f59e0b", "mistral": "#f97316", "ollama": "#8b5cf6",
         }
         bc, btc = badge_colors.get(pkey, (CHIP_BG, TEXT))
         sc = spd_colors.get(pkey, MUTED)
@@ -816,22 +817,14 @@ if not st.session_state.provider_confirmed:
 
     st.markdown('<div style="height:12px"></div>', unsafe_allow_html=True)
 
-    # ── Row 2: Claude · Ollama · Custom (placeholder) ───────────────────────
+    # ── Row 2: Claude · Mistral · Ollama ─────────────────────────────────
     col4, col5, col6 = st.columns(3)
-    for col, pkey in zip([col4, col5], ["anthropic", "ollama"]):
+    for col, pkey in zip([col4, col5, col6], ["anthropic", "mistral", "ollama"]):
         with col:
             st.markdown(_card_html(pkey, chosen == pkey), unsafe_allow_html=True)
             lbl = f"✓  {PROVIDER_INFO[pkey]['label']} Selected" if chosen == pkey else f"Select {PROVIDER_INFO[pkey]['label']}"
             if st.button(lbl, key=f"sel_{pkey}", use_container_width=True):
                 st.session_state.llm_provider = pkey; st.rerun()
-    with col6:
-        st.markdown(f"""
-        <div class="pcard-custom">
-            <div style="font-size:2rem;">＋</div>
-            <div style="font-weight:600;color:{MUTED};">Add Custom API</div>
-            <div style="font-size:.72rem;color:{MUTED};opacity:.7;">Coming soon</div>
-        </div>
-        """, unsafe_allow_html=True)
 
     # ── API Key Panel ────────────────────────────────────────────────────────
     if chosen and chosen != "ollama":

@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# LLM Provider — "groq" | "gemini" | "openai" | "anthropic" | "ollama"
+# LLM Provider — "groq" | "gemini" | "openai" | "anthropic" | "mistral" | "ollama"
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")
 
 # Ollama (local)
@@ -30,6 +30,11 @@ OPENAI_VISION_MODEL = os.getenv("OPENAI_VISION_MODEL", "gpt-4o")
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 ANTHROPIC_MODEL = os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-6")
 ANTHROPIC_VISION_MODEL = os.getenv("ANTHROPIC_VISION_MODEL", "claude-sonnet-4-6")
+
+# Mistral
+MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY", "")
+MISTRAL_MODEL = os.getenv("MISTRAL_MODEL", "mistral-large-latest")
+MISTRAL_VISION_MODEL = os.getenv("MISTRAL_VISION_MODEL", "pixtral-large-latest")
 
 # Data limits
 MAX_DATA_CHARS = int(os.getenv("MAX_DATA_CHARS", "6000"))
@@ -114,6 +119,21 @@ PROVIDER_INFO = {
         "card_bg": "linear-gradient(135deg,#1f1505,#120d03)",
         "card_border": "rgba(245,158,11,.25)",
         "card_glow": "rgba(245,158,11,.3)",
+    },
+    "mistral": {
+        "label": "Mistral",
+        "icon": "🌀",
+        "speed": "~300 tok/s",
+        "badge": "EU POWERHOUSE",
+        "badge_color": "#f97316",
+        "desc": "Mistral Large · Fast & efficient · Great multilingual",
+        "key_env": "MISTRAL_API_KEY",
+        "key_url": "https://console.mistral.ai",
+        "key_placeholder": "sk-...",
+        "needs_key": True,
+        "card_bg": "linear-gradient(135deg,#1f0a05,#120803)",
+        "card_border": "rgba(249,115,22,.25)",
+        "card_glow": "rgba(249,115,22,.3)",
     },
     "ollama": {
         "label": "Ollama",

@@ -9,6 +9,7 @@ from config import (
     GEMINI_MODEL, GEMINI_VISION_MODEL,
     OPENAI_MODEL, OPENAI_VISION_MODEL,
     ANTHROPIC_MODEL, ANTHROPIC_VISION_MODEL,
+    MISTRAL_MODEL, MISTRAL_VISION_MODEL,
     MAX_DATA_CHARS,
 )
 
@@ -89,6 +90,11 @@ def _anthropic_llm(api_key: str, model: str):
     return ChatAnthropic(api_key=api_key, model=model, temperature=0.1, streaming=True)
 
 @st.cache_resource(show_spinner=False)
+def _mistral_llm(api_key: str, model: str):
+    from langchain_mistralai import ChatMistralAI
+    return ChatMistralAI(api_key=api_key, model=model, temperature=0.1, streaming=True)
+
+@st.cache_resource(show_spinner=False)
 def _ollama_llm(model: str, base_url: str):
     from langchain_ollama import OllamaLLM
     return OllamaLLM(model=model, base_url=base_url, temperature=0.1)
@@ -105,6 +111,8 @@ def get_llm():
         return _openai_llm(_get_api_key("openai"), OPENAI_MODEL)
     if provider == "anthropic":
         return _anthropic_llm(_get_api_key("anthropic"), ANTHROPIC_MODEL)
+    if provider == "mistral":
+        return _mistral_llm(_get_api_key("mistral"), MISTRAL_MODEL)
     # Ollama
     try:
         return _ollama_llm(OLLAMA_MODEL, OLLAMA_BASE_URL)
@@ -143,6 +151,16 @@ def _stream_response(prompt: str) -> str:
             for text in stream.text_stream:
                 full += text
                 placeholder.markdown(full + "▌")
+        placeholder.markdown(full)
+        return full
+
+    # Mistral — LangChain streaming
+    if provider == "mistral":
+        llm = get_llm()
+        for chunk in llm.stream(prompt):
+            text = chunk.content if hasattr(chunk, "content") else str(chunk)
+            full += text
+            placeholder.markdown(full + "▌")
         placeholder.markdown(full)
         return full
 
@@ -222,6 +240,21 @@ def _call_vision_with_image(image_bytes: bytes, question: str, lang_instruction:
             for text in stream.text_stream:
                 full += text
                 placeholder.markdown(full + "▌")
+        placeholder.markdown(full)
+        return full
+
+    if provider == "mistral":
+        from mistralai import Mistral
+        client = Mistral(api_key=_get_api_key("mistral"))
+        response = client.chat.complete(
+            model=MISTRAL_VISION_MODEL,
+            messages=[{"role": "user", "content": [
+                {"type": "image_url", "image_url": f"data:image/jpeg;base64,{b64}"},
+                {"type": "text", "text": prompt_text},
+            ]}],
+            temperature=0.1,
+        )
+        full = response.choices[0].message.content.strip()
         placeholder.markdown(full)
         return full
 
