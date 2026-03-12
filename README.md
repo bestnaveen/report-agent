@@ -16,8 +16,23 @@ A chatbot-style web app that analyzes data files and images, answers questions i
 | **Smart charts** | Bar, Line, Pie, Scatter, Heatmap (Plotly, dark theme) |
 | **Export** | PDF, DOCX, CSV reports + PNG chart images |
 | **Streaming output** | Responses appear token-by-token — feels instant |
-| **3 AI Providers** | Groq (fastest), Gemini Flash (best vision), Ollama (local & private) |
+| **6 AI Providers** | Groq, Gemini, OpenAI, Claude, Mistral, Ollama |
+| **3D Glassmorphism UI** | Frosted-glass surfaces, depth shadows, 3D hover effects, purple gradient palette |
+| **Dark / Light themes** | Toggle between themes with one click |
 | **Phase 2** | RAG (ChromaDB), chat persistence (SQLite) |
+
+---
+
+## 🎨 UI Design
+
+The interface features a modern **3D glassmorphism** design:
+
+- **Frosted-glass panels** — `backdrop-filter: blur()` on sidebar, cards, chat bubbles, and headers
+- **3D depth effects** — Cards lift on hover with perspective transforms, buttons have inset highlights and press states
+- **Purple gradient palette** — Rich violet-to-purple (#7c3aed → #a855f7) with pink accent (#ec4899)
+- **Glow interactions** — Focus states and hover emit subtle purple glows, animated status indicators
+- **3D avatars** — Chat avatars render as spheres with inset shadows and gradient highlights
+- **Smooth transitions** — Cubic-bezier easing on all interactive elements
 
 ---
 
@@ -86,7 +101,7 @@ http://localhost:8501
 
 ### Step 7 — Choose Your AI Provider
 
-On the screen you will see **5 options**:
+On the screen you will see **6 options**:
 
 | Option | Speed | What to do |
 |--------|-------|-----------|
@@ -94,6 +109,7 @@ On the screen you will see **5 options**:
 | ✨ **Gemini Flash** | ~400 tok/s · BEST VISION | Click → paste free API key from [aistudio.google.com](https://aistudio.google.com) |
 | 🤖 **OpenAI** | ~200 tok/s · GPT-4o | Click → paste API key from [platform.openai.com](https://platform.openai.com/api-keys) |
 | 🧠 **Claude** | ~180 tok/s · SMARTEST | Click → paste API key from [console.anthropic.com](https://console.anthropic.com) |
+| 🔶 **Mistral** | ~350 tok/s · EU-HOSTED | Click → paste API key from [console.mistral.ai](https://console.mistral.ai) |
 | 🖥️ **Ollama** | Varies · 100% LOCAL | Click → no key needed → click Start |
 
 ---
@@ -214,6 +230,7 @@ GROQ_API_KEY = "your_groq_key_here"
 GEMINI_API_KEY = "your_gemini_key_here"
 OPENAI_API_KEY = "your_openai_key_here"
 ANTHROPIC_API_KEY = "your_anthropic_key_here"
+MISTRAL_API_KEY = "your_mistral_key_here"
 ```
 
 Get free keys:
@@ -221,6 +238,7 @@ Get free keys:
 - Gemini → [aistudio.google.com](https://aistudio.google.com)
 - OpenAI → [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
 - Anthropic → [console.anthropic.com](https://console.anthropic.com)
+- Mistral → [console.mistral.ai](https://console.mistral.ai)
 
 ### Step 5 — Deploy
 
@@ -245,7 +263,7 @@ git push origin main
 
 ```
 report-agent/
-├── app.py                    # Streamlit UI + provider selection
+├── app.py                    # Streamlit UI — 3D glassmorphism, provider selection, chat
 ├── agent.py                  # AI brain — text, vision, streaming
 ├── data_loader.py            # File parser (all formats)
 ├── image_handler.py          # Image processing + OCR
@@ -280,6 +298,7 @@ report-agent/
 |----------|-------|----------|--------|------|---------|
 | ⚡ **Groq** | ~500 tok/s | ⭐⭐⭐⭐⭐ | ✅ | Free tier | [console.groq.com](https://console.groq.com) |
 | ✨ **Gemini Flash** | ~400 tok/s | ⭐⭐⭐⭐⭐ | ✅ Best | Free tier | [aistudio.google.com](https://aistudio.google.com) |
+| 🔶 **Mistral** | ~350 tok/s | ⭐⭐⭐⭐⭐ | ❌ | Free tier | [console.mistral.ai](https://console.mistral.ai) |
 | 🤖 **OpenAI GPT-4o** | ~200 tok/s | ⭐⭐⭐⭐⭐ | ✅ | Paid (cheap) | [platform.openai.com](https://platform.openai.com/api-keys) |
 | 🧠 **Claude Sonnet** | ~180 tok/s | ⭐⭐⭐⭐⭐ | ✅ | Paid | [console.anthropic.com](https://console.anthropic.com) |
 | 🖥️ **Ollama** | Varies | ⭐⭐⭐⭐ | ✅ | Free | No key — runs locally |
